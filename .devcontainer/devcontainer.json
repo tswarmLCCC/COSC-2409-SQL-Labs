@@ -1,21 +1,28 @@
 {
-  "name": "Postgres Lab Environment",
-  "features": {
-    "ghcr.io/devcontainers/features/postgres:1": {
-      "version": "15",
-      "databaseName": "classroom",
-      "adminPassword": "password123"
-    }
-  },
+  "name": "SQL Lab Environment",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
   "customizations": {
     "vscode": {
       "extensions": [
-        "qwtel.sqlite-viewer",
         "mtxr.sqltools",
         "mtxr.sqltools-driver-pg"
-      ]
+      ],
+      "settings": {
+        "sqltools.connections": [
+          {
+            "name": "Classroom DB",
+            "driver": "PostgreSQL",
+            "server": "localhost",
+            "port": 5432,
+            "database": "classroom",
+            "username": "postgres",
+            "askForPassword": false,
+            "password": "password123"
+          }
+        ]
+      }
     }
   },
   "forwardPorts": [5432],
-  "postCreateCommand": "psql -U postgres -d classroom -f setup.sql"
+  "postCreateCommand": "bash .devcontainer/setup.sh"
 }
